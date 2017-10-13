@@ -14,5 +14,6 @@
             <Button Content="开始监听" Click="backgroundToast_Click" Margin="0,5,0,0" x:Name="start" />
             <Button Content="停止监听" Click="stopTimer_Click" Margin="0,5,0,0" IsEnabled="False" x:Name="stop"/>
         </GridView>
+        <TextBlock x:Name="latest_dynamic" Margin="0,5,0,0"></TextBlock>
     </StackPanel>
 </Page>

@@ -27,10 +27,13 @@ namespace BiliBili
         System.Threading.Timer timer;
         public MainPage()
         {
-            ApplicationView.PreferredLaunchViewSize = new Size(320, 180);
+            ApplicationView.PreferredLaunchViewSize = new Size(420, 280);
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
-            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(320, 180));
+            ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(420, 280));
             this.InitializeComponent();
+            latest_dynamic.Text = "当前更新的视频：\n" +
+                        "作者：\n" +
+                        "标题：";
             ReadCookies();
         }
 
@@ -106,8 +109,8 @@ namespace BiliBili
             HttpClient client = new HttpClient(handler);
             HttpResponseMessage response = client.GetAsync("https://api.bilibili.com/x/web-feed/feed?jsonp=jsonp&ps=5&type=0&_=").Result;
             string result = await response.Content.ReadAsStringAsync();
-
             JObject jo = (JObject)JsonConvert.DeserializeObject(result);
+
             if (jo["code"].ToString() != "-101")
             {
                 if (Int64.Parse(jo["data"][0]["archive"]["ctime"].ToString()) > Int64.Parse(settings.Values["recordtime"].ToString()))
@@ -116,6 +119,14 @@ namespace BiliBili
                     settings.Values["url"] = "https://www.bilibili.com/video/av" + jo["data"][0]["archive"]["aid"] + "/";
                     string name = jo["data"][0]["archive"]["owner"]["name"].ToString();
                     string title = jo["data"][0]["archive"]["title"].ToString();
+
+                    //更新ui提示
+                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+                        latest_dynamic.Text = "当前更新的视频：av" + jo["data"][0]["archive"]["aid"] +"\n"+
+                        "作者："+name+"\n"+
+                        "标题："+title;
+                    });
+
                     string xml = "<toast>" +
                                 "<visual>" +
                                     "<binding template=\"ToastGeneric\">" +
