@@ -121,7 +121,8 @@ namespace BiliBili
                                     "<binding template=\"ToastGeneric\">" +
                                         "<text>" + name + "</text>" +
                                         "<text>" + title + "</text>" +
-                                        "<image placement = \"AppLogoOverride\" src = \"ms-appx:///Assets/StoreLogo.png\" />" +
+                                        //"<image placement = \"AppLogoOverride\" src = \"ms-appx:///Assets/StoreLogo.png\" />" +
+                                        "<image placement = \"AppLogoOverride\" src = \""+jo["data"][0]["archive"]["owner"]["face"].ToString()+"\" />" +
                                        "</binding>" +
                                 "</visual>" +
                                 "<actions>" +
