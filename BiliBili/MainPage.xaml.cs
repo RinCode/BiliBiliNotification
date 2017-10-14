@@ -34,13 +34,15 @@ namespace BiliBili
             latest_dynamic.Text = "当前更新的视频：\n" +
                         "作者：\n" +
                         "标题：";
+            var settings = ApplicationData.Current.LocalSettings;
+            settings.Values["recordtime"] = 0;
             ReadCookies();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             var settings = ApplicationData.Current.LocalSettings;
-            var val = settings.Values["option"];
+            var val = settings.Values["recordtime"];
             if (null != val)
             {
                 string option = val.ToString();
@@ -52,7 +54,6 @@ namespace BiliBili
         {
             var settings = ApplicationData.Current.LocalSettings;
             settings.Values["cookies"] = cookies_text.Text;
-            settings.Values["recordtime"] = 0;
             WriteCookies();
             var startTimeSpan = TimeSpan.Zero;
             try

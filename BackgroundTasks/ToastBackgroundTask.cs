@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace BackgroundTasks
             if (details != null)
             {
                 string arg = details.Argument;
-                //settings.Values["option"] = arg;// 获取选择的项
                 if (arg == "ok")
                 {
                     settings.Values["recordtime"] = settings.Values["ctime"];
